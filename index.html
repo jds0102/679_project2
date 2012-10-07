@@ -49,13 +49,13 @@
 					preserveDrawingBuffer	: true	// to allow screenshot
 				});
 				renderer.setClearColorHex( 0xBBBBBB, 1 );
-			// uncomment if webgl is required
-			//}else{
-			//	Detector.addGetWebGLMessage();
-			//	return true;
+			 //uncomment if webgl is required
 			}else{
-				renderer	= new THREE.CanvasRenderer();
-			}
+				Detector.addGetWebGLMessage();
+				return true;
+			}// else{
+// 				renderer	= new THREE.CanvasRenderer();
+// 			}
 			renderer.setSize( window.innerWidth, window.innerHeight );
 			document.getElementById('container').appendChild(renderer.domElement);
 
@@ -74,7 +74,6 @@
 			scene.add(camera);
 
 			// create a camera contol
-			//cameraControls = new THREEx.Controls(camera)
 			cameraControls	= new THREEx.DragPanControls(camera)
 
 			// transparently support window resize
@@ -89,10 +88,34 @@
 
 			// here you add your objects
 			// - you will most likely replace this part by your own
-			var geometry	= new THREE.TorusGeometry( 1, 0.42 );
-			var material	= new THREE.MeshNormalMaterial();
-			var mesh	= new THREE.Mesh( geometry, material );
-			scene.add( mesh );
+			 // var geometry	= new THREE.TorusGeometry( 1, 0.42 );
+//  			var material	= new THREE.MeshNormalMaterial();
+//  			var mesh	= new THREE.Mesh( geometry, material );
+//  			scene.add( mesh );
+           
+            var ambient = new THREE.AmbientLight( 0xffffff );
+				scene.add( ambient );
+            var directionalLight = new THREE.DirectionalLight( 0xffeedd );
+				directionalLight.position.set( 0, -70, 100 ).normalize();
+				scene.add( directionalLight );
+            
+           //  var loader = new THREE.JSONLoader();
+//             loader.load( { model: "js/cube.js", callback: createScene } );
+            
+            
+              new THREE.JSONLoader().load('js/couldron2.js', function(geometry){
+              var mesh = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial());
+             scene.add( mesh );
+          }, 'images');
+
+
+
+
+		}
+		
+		function createScene(){
+		    var mesh = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial());
+		    scene.add( mesh );
 		}
 
 		// animation loop
