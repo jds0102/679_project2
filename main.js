@@ -21,6 +21,25 @@ function init(){
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.getElementById('container').appendChild(renderer.domElement);
 
+	var vertex = 
+	"  	void main() {\
+        vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );\
+        vec4 p = projectionMatrix * mvPosition;\
+        gl_Position = p;\
+		\
+      }\
+	";
+	var fragment = "\
+      void main() { \
+        gl_FragColor = vec4(1,1,1,1); \
+      } ";
+	
+	
+	var shaderMaterial = new THREE.ShaderMaterial({
+		//uniform : {map: { type: "t", value: 1, texture: new THREE.Texture(new Image("images/10_5555.JPG")) }},
+	  vertexShader : vertex,
+	  fragmentShader : fragment
+	});
 	// create a scene
 	scene = new THREE.Scene();
 
@@ -31,12 +50,9 @@ function init(){
 
 	var ambient = new THREE.AmbientLight( 0xffffff );
 		scene.add( ambient );
-	var directionalLight = new THREE.DirectionalLight( 0xffeedd );
-		directionalLight.position.set( 0, -70, 100 ).normalize();
-		scene.add( directionalLight );
   
 	  new THREE.JSONLoader().load('js/couldron2.js', function(geometry){
-	  var mesh = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial());
+	  var mesh = new THREE.Mesh( geometry, shaderMaterial);
 	 scene.add( mesh );
   }, 'images');
 
