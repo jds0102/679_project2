@@ -3,6 +3,21 @@ var camera, cameraControls;
 
 if( !init() )	animate();
 
+function getShader(id) {
+      var shaderScript = document.getElementById(id);
+      if (!shaderScript) {
+          return null;
+      }
+      var str = "";
+      var k = shaderScript.firstChild;
+      while (k) {
+          if (k.nodeType == 3)
+              str += k.textContent;
+          k = k.nextSibling;
+      }
+	  return str;
+}
+
 function init(){
 
 	if( Detector.webgl ){
@@ -21,18 +36,8 @@ function init(){
 	renderer.setSize( window.innerWidth, window.innerHeight );
 	document.getElementById('container').appendChild(renderer.domElement);
 
-	var vertex = 
-	"  	void main() {\
-        vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );\
-        vec4 p = projectionMatrix * mvPosition;\
-        gl_Position = p;\
-		\
-      }\
-	";
-	var fragment = "\
-      void main() { \
-        gl_FragColor = vec4(1,1,1,1); \
-      } ";
+	var vertex = getShader("vertex");
+	var fragment = getShader("fragment");//document.getElementById("fragment");
 	
 	
 	var shaderMaterial = new THREE.ShaderMaterial({
