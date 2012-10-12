@@ -1,21 +1,20 @@
-
-
-function ship(pos) {
+function ship() {
 	
 	var loader = new THREE.JSONLoader();
-	this.position = pos;
 	this.mesh;
+	this.destination;
 	this.self = this;
+	this.speed = 1.0;
 	
 	this.load = function() {
 		
-		createScene = function (geometry) {
+		onLoadObject = function (geometry) {
 			self.mesh = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial());
 			scene.add( self.mesh );
 		}
 		
 		loader.load('js/plane.js', 
-		createScene,
+		onLoadObject,
   		'images');
   		//self.mesh.position = self.position;
 
@@ -25,7 +24,22 @@ function ship(pos) {
 		return self.mesh.position;
 	}
 	
+	this.setPosition = function(pos) {
+		var movement = pos.subSelf(self.mesh.position);
+		self.mesh.translate( movement.length() , movement);
+	}
+	
+	this.setDestination = function(dest) {
+		self.destination = dest;
+	}
+	
 	this.update = function(elapsedTime) {
+		if (self.destination != undefined) {
+			var tempDest = self.destination.clone();
+			tempDest.subSelf(self.mesh.position);
+			self.mesh.translate( .05, tempDest);
+			//alert(tempDest.x);
+		}
 	}
 	
 	this.draw = function() {
