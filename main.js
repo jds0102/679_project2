@@ -75,7 +75,7 @@ function animate() {
 function render() {
 
 	// actually render the scene
-	camera.lookAt(Player.mesh.position);
+	camera.lookAt(Player.getPosition());
 	//camera.lookAt(new THREE.Vector3(0,0,0));
 	renderer.render( scene, camera );
 }

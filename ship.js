@@ -14,7 +14,7 @@ function ship(pos) {
 			scene.add( self.mesh );
 		}
 		
-		new THREE.JSONLoader().load('js/plane.js', 
+		loader.load('js/plane.js', 
 		createScene,
   		'images');
 
