@@ -1,6 +1,6 @@
 var scene, renderer;
 var camera, cameraControls;
-
+var Player;
 if( !init() )	animate();
 
 function init(){
@@ -45,17 +45,14 @@ function init(){
 
 	// put a camera in the scene
 	camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 10000 );
-	camera.position.set(0, 0, 5);
+	camera.position.set(50, 50, 50);
 	scene.add(camera);
 
 	var ambient = new THREE.AmbientLight( 0xffffff );
 		scene.add( ambient );
-  
-	  new THREE.JSONLoader().load('js/couldron2.js', function(geometry){
-	  var mesh = new THREE.Mesh( geometry, shaderMaterial);
-	 scene.add( mesh );
-  }, 'images');
-
+		
+	Player = new ship(0);
+	Player.load();
 }
 
 function createScene(){
@@ -73,5 +70,7 @@ function animate() {
 function render() {
 
 	// actually render the scene
+	camera.lookAt(Player.mesh.position);
+	//camera.lookAt(new THREE.Vector3(0,0,0));
 	renderer.render( scene, camera );
 }
