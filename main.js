@@ -1,8 +1,13 @@
 var scene, renderer;
 var camera, cameraControls;
-var Player;
+var player;
 
-if( !init() )	animate();
+var objects = new Array();
+var loading = false;
+
+
+//if( !init() )	animate();
+init();
 
 function init(){
 
@@ -34,13 +39,28 @@ function init(){
 
 	var ambient = new THREE.AmbientLight( 0xffffff );
 		scene.add( ambient );
-		
-	loadGameObjects();
+	
+	createGameObjects();
+	loadGameObjects(0, animate);
 }
 
-function loadGameObjects() {
-	Player = new ship(0);
-	Player.load();
+function createGameObjects() {
+	player = objects[0] = new Ship(new THREE.Vector3(0.0,0.0,0.0));
+	asteroid = objects[1] = new Asteroid(new THREE.Vector3(5.0,5.0,0.0));
+}
+
+
+function loadGameObjects(i, callback) {	
+	if ( i < objects.length ) {	
+		if (loading == false) {
+			objects[i].load();
+			i++;
+		}
+		setTimeout(loadGameObjects,1000/60,i, callback)	
+	}
+	else  {
+		callback();
+	}
 }
 
 // animation loop
@@ -51,6 +71,7 @@ function animate() {
 
 // render the scene
 function render() {
-	camera.lookAt(Player.getPosition());
+	camera.lookAt(player.getPosition());
 	renderer.render( scene, camera );
+
 }

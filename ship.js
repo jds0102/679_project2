@@ -1,4 +1,4 @@
-function ship(pos) {
+function Ship(pos) {
 	
 	var loader = new THREE.JSONLoader();
 	this.position = pos;
@@ -10,12 +10,12 @@ function ship(pos) {
 		onLoadObject = function (geometry) {
 			self.mesh = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial());
 			scene.add( self.mesh );
+			loading = false;
 		}
 		
-		loader.load('js/plane.js', 
-		onLoadObject,
-  		'images');
-
+		loading = true;
+		loader.load('js/plane.js', onLoadObject);
+		
 	}
 	
 	this.getPosition = function () {
