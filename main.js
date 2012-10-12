@@ -1,6 +1,10 @@
 var scene, renderer;
 var camera, cameraControls;
+<<<<<<< HEAD
 var player;
+=======
+var Player;// Player2;
+>>>>>>> dfad2764121f6799f9480caf88f223b5595ff9e4
 
 var objects = new Array();
 var loading = false;
@@ -35,11 +39,16 @@ function init(){
 
 	// put a camera in the scene
 	camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 10000 );
+<<<<<<< HEAD
 	camera.position.set(0, 50, 0);
+=======
+	camera.position.set(0, 30, 21);
+>>>>>>> dfad2764121f6799f9480caf88f223b5595ff9e4
 	scene.add(camera);
 
 	var ambient = new THREE.AmbientLight( 0xffffff );
 		scene.add( ambient );
+<<<<<<< HEAD
 	
 	createGameObjects();
 	//loadGameObjects(0, onLoadObjects);
@@ -72,6 +81,19 @@ function loadGameObjects(i, callback) {
 	else  {
 		callback();
 	}
+=======
+
+	loadGameObjects();
+}
+
+function loadGameObjects() {
+	Player = new ship();
+	Player.load();
+	Player.setDestination(new THREE.Vector3(10,0,0));
+	
+	//Player2 = new ship();
+	//Player2.load();
+>>>>>>> dfad2764121f6799f9480caf88f223b5595ff9e4
 }
 
 // animation loop
@@ -82,7 +104,13 @@ function animate() {
 
 // render the scene
 function render() {
+<<<<<<< HEAD
 	camera.lookAt(player.getPosition());
+=======
+	
+	Player.update(.016);
+	camera.lookAt(Player.getPosition());
+>>>>>>> dfad2764121f6799f9480caf88f223b5595ff9e4
 	renderer.render( scene, camera );
 
 }
