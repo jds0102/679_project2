@@ -19,6 +19,7 @@ function Ship(pos) {
 	}
 	
 	this.getPosition = function () {
+		alert(self.mesh.position.toSource());
 		return self.mesh.position;
 	}
 	

@@ -5,6 +5,7 @@ var player;
 var objects = new Array();
 var loading = false;
 
+var currentLevel = level1;
 
 //if( !init() )	animate();
 init();
@@ -34,19 +35,29 @@ function init(){
 
 	// put a camera in the scene
 	camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 10000 );
-	camera.position.set(50, 50, 50);
+	camera.position.set(0, 50, 0);
 	scene.add(camera);
 
 	var ambient = new THREE.AmbientLight( 0xffffff );
 		scene.add( ambient );
 	
 	createGameObjects();
-	loadGameObjects(0, animate);
+	//loadGameObjects(0, onLoadObjects);
+	player.load();
+	asteroid.load();
+	setTimeout(onLoadObjects,1000);
+}
+
+function onLoadObjects() {
+	asteroid.draw();
+	//objects[2].draw();
+	animate();
 }
 
 function createGameObjects() {
-	player = objects[0] = new Ship(new THREE.Vector3(0.0,0.0,0.0));
-	asteroid = objects[1] = new Asteroid(new THREE.Vector3(5.0,5.0,0.0));
+	player =  new Ship(new THREE.Vector3(0.0,0.0,0.0));
+	asteroid = new Asteroid(new THREE.Vector3(5.0,5.0,0.0));
+	//objects[2] = new Asteroid(new THREE.Vector3(10.0,10.0,0.0));
 }
 
 
