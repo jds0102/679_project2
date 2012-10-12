@@ -2,18 +2,26 @@
 
 function ship(pos) {
 	
+	var loader = new THREE.JSONLoader();
 	this.position = pos;
-	var mesh;
+	this.mesh;
+	this.self = this;
 	
 	this.load = function() {
 		
+		createScene = function (geometry) {
+			self.mesh = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial());
+			scene.add( self.mesh );
+		}
+		
 		new THREE.JSONLoader().load('js/plane.js', 
-		function(geometry){
-	  		mesh = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial());
-	 		scene.add( mesh );
-  		}, 
+		createScene,
   		'images');
 
+	}
+	
+	this.getPosition = function () {
+		return self.mesh.position;
 	}
 	
 	this.update = function(elapsedTime) {
