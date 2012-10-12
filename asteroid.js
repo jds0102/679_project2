@@ -17,12 +17,19 @@ function Asteroid(pos) {
 		
 	}
 	
+	this.getPosition = function () {
+		//alert(self.mesh.position.toSource());
+		return self.mesh.matrix.getPosition();
+	}
+	
 	this.update = function(elapsedTime) {
 		
 	}
 	
 	this.draw = function() {
-		self.mesh.translate(10, new THREE.Vector3(1,0,0));
+		//self.mesh.matrix.translate(new THREE.Vector3(10,0,0));
+		//self.mesh.updateMatrix();
+		self.mesh.position.x += 10;
 	}
 	
 }

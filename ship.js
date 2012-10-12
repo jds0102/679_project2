@@ -1,9 +1,4 @@
-<<<<<<< HEAD
 function Ship(pos) {
-=======
-function ship() {
->>>>>>> dfad2764121f6799f9480caf88f223b5595ff9e4
-	
 	var loader = new THREE.JSONLoader();
 	this.mesh;
 	this.destination;
@@ -18,28 +13,20 @@ function ship() {
 			loading = false;
 		}
 		
-<<<<<<< HEAD
 		loading = true;
 		loader.load('js/plane.js', onLoadObject);
 		
-=======
-		loader.load('js/plane.js', 
-		onLoadObject,
-  		'images');
-  		//self.mesh.position = self.position;
-
->>>>>>> dfad2764121f6799f9480caf88f223b5595ff9e4
 	}
 	
 	this.getPosition = function () {
-		alert(self.mesh.position.toSource());
-		return self.mesh.position;
+		//alert(self.mesh.position.toSource());
+		return self.mesh.matrix.getPosition();
 	}
 	
-	this.setPosition = function(pos) {
-		var movement = pos.subSelf(self.mesh.position);
-		self.mesh.translate( movement.length() , movement);
-	}
+	// this.setPosition = function(pos) {
+		// var movement = pos.subSelf(self.mesh.position);
+		// self.mesh.matrix.translate( movement.length() , movement);
+	// }
 	
 	this.setDestination = function(dest) {
 		self.destination = dest;
