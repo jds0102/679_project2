@@ -17,6 +17,7 @@ function ship(pos) {
 		loader.load('js/plane.js', 
 		createScene,
   		'images');
+  		//self.mesh.position = self.position;
 
 	}
 	
@@ -25,7 +26,6 @@ function ship(pos) {
 	}
 	
 	this.update = function(elapsedTime) {
-		
 	}
 	
 	this.draw = function() {

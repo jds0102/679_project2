@@ -56,7 +56,7 @@ function init(){
 	var ambient = new THREE.AmbientLight( 0xffffff );
 		scene.add( ambient );
 		
-	Player = new ship(0);
+	Player = new ship(new THREE.Vector3(0,0,10));
 	Player.load();
 }
 
