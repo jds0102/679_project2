@@ -4,31 +4,10 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
 		
-		<script src="vendor/three.js/Three.js"></script>>
+		<script src="vendor/three.js/Three.js"></script>
 		<script src="vendor/three.js/Detector.js"></script>
 		
 		<link  href="css/main.css" rel="stylesheet"/>
-		<!-- SHADERS FOLLOW -->  
-		<script id="fragment" type="x-shader/x-fragment" src="fragment.glsl">
-			varying float r;
-
-			void main() { 
-				float t = mod(r,0.5);
-				t = t * 10.0 ;
-				//t.normalize();
-				gl_FragColor = vec4(t,0,0,1);
-			}
-		</script>
-
-		<script id="vertex" type="x-shader/x-vertex">
-			varying float r;
-			void main() {
-			vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
-			vec4 p = projectionMatrix * mvPosition;
-			r = p.x;
-			gl_Position = p;
-		}
-		</script>
 	</head>
 <body>
 	<!-- three.js container -->
