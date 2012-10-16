@@ -1,6 +1,8 @@
 var scene, renderer;
 var camera, cameraControls;
 var Player;// Player2;
+var projector;
+var clickPlane;
 
 if( !init() )	animate();
 
@@ -36,15 +38,22 @@ function init(){
 		scene.add( ambient );
 
 	loadGameObjects();
+	
+	//Projector used for RayCasting
+	projector = new THREE.Projector();
+
+	
+	document.addEventListener( 'mousedown', onMouseDown, false);
+	document.addEventListener( 'mouseup', onMouseUp, false);
 }
 
 function loadGameObjects() {
 	Player = new ship();
 	Player.load();
-	Player.setDestination(new THREE.Vector3(10,0,0));
+	Player.setDestination(new THREE.Vector3(200,0,0));
 	
-	//Player2 = new ship();
-	//Player2.load();
+	Player2 = new asteroid();
+	Player2.load();
 }
 
 // animation loop
@@ -57,6 +66,21 @@ function animate() {
 function render() {
 	
 	Player.update(.016);
+	//alert(Player2.getPosition().x);
 	camera.lookAt(Player.getPosition());
 	renderer.render( scene, camera );
 }
+
+function onMouseDown(evt) {
+	
+}
+
+function onMouseUp(evt) {
+	var vector = new THREE.Vector3( ( evt.clientX / window.innerWidth ) * 2 - 1, - ( evt.clientY / window.innerHeight ) * 2 + 1, 0.5 );
+	projector.unprojectVector( vector, camera );
+	
+	var ray = new THREE.Ray( camera.position, vector.subSelf( camera.position ).normalize() );
+	
+	alert (ray.direction.x + "," + ray.direction.y + "," + ray.direction.z);
+}
+

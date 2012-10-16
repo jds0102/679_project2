@@ -21,12 +21,12 @@ function ship() {
 	}
 	
 	this.getPosition = function () {
-		return self.mesh.position;
+		return self.mesh.matrix.getPosition().clone();
 	}
 	
 	this.setPosition = function(pos) {
-		var movement = pos.subSelf(self.mesh.position);
-		self.mesh.translate( movement.length() , movement);
+		var movement = pos.subSelf(self.mesh.matrix.getPosition());
+		self.mesh.matrix.translate( movement.length() , movement);
 	}
 	
 	this.setDestination = function(dest) {
@@ -36,9 +36,14 @@ function ship() {
 	this.update = function(elapsedTime) {
 		if (self.destination != undefined) {
 			var tempDest = self.destination.clone();
-			tempDest.subSelf(self.mesh.position);
-			self.mesh.translate( .05, tempDest);
-			//alert(tempDest.x);
+			tempDest.subSelf(self.mesh.matrix.getPosition());
+			if (tempDest.length() > .1) {
+				//self.mesh.matrix.translate(tempDest);
+				self.mesh.updateMatrix();
+				self.mesh.translate(.1, tempDest);
+			}
+			//self.mesh.translate(.005);
+			//alert(self.mesh.position.x);
 		}
 	}
 	
