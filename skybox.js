@@ -1,4 +1,5 @@
-function Ship(pos) {
+function skybox() {
+	
 	var loader = new THREE.JSONLoader();
 	this.mesh;
 	this.destination;
@@ -9,24 +10,28 @@ function Ship(pos) {
 		
 		onLoadObject = function (geometry) {
 			self.mesh = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial());
+			self.mesh.scale.x = 20;
+			self.mesh.scale.y = 20;
+			self.mesh.scale.z = 20;
+			self.mesh.rotation.y = -Math.PI/2;
 			scene.add( self.mesh );
-			loading = false;
 		}
 		
-		loading = true;
-		loader.load('js/plane.js', onLoadObject);
-		
+		loader.load('js/skybox.js', 
+		onLoadObject,
+  		'images');
+  		//self.mesh.position = self.position;
+
 	}
 	
 	this.getPosition = function () {
-		return self.mesh.matrix.getPosition().clone();
+		return self.mesh.position;
 	}
 	
 	this.setPosition = function(pos) {
-		var movement = pos.subSelf(self.mesh.matrix.getPosition());
-		self.mesh.matrix.translate( movement.length() , movement);
+		var movement = pos.subSelf(self.mesh.position);
+		self.mesh.translate( movement.length() , movement);
 	}
-
 	
 	this.setDestination = function(dest) {
 		self.destination = dest;
@@ -35,14 +40,9 @@ function Ship(pos) {
 	this.update = function(elapsedTime) {
 		if (self.destination != undefined) {
 			var tempDest = self.destination.clone();
-			tempDest.subSelf(self.mesh.matrix.getPosition());
-			if (tempDest.length() > .1) {
-				//self.mesh.matrix.translate(tempDest);
-				self.mesh.updateMatrix();
-				self.mesh.translate(.1, tempDest);
-			}
-			//self.mesh.translate(.005);
-			//alert(self.mesh.position.x);
+			tempDest.subSelf(self.mesh.position);
+			self.mesh.translate( .05, tempDest);
+			//alert(tempDest.x);
 		}
 	}
 	

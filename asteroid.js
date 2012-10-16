@@ -1,10 +1,7 @@
-
-function asteroid(pos) {
+function Asteroid(pos) {
 	
 	var loader = new THREE.JSONLoader();
 	this.position = pos;
-	this.boundingRadius = 0;
-	this.active = true;
 	this.mesh;
 	this.self = this;
 	
@@ -13,11 +10,16 @@ function asteroid(pos) {
 		onLoadObject = function (geometry) {
 			self.mesh = new THREE.Mesh( geometry, new THREE.MeshFaceMaterial());
 			scene.add( self.mesh );
+			loading = false;
 		}
+		loading = true;
+		loader.load('js/yellow_aste.js', onLoadObject);
 		
-		loader.load('js/green_aste.js', 
-		onLoadObject);
-		
+	}
+	
+	this.getPosition = function () {
+		//alert(self.mesh.position.toSource());
+		return self.mesh.matrix.getPosition();
 	}
 	
 	this.getPosition = function() {
@@ -34,7 +36,9 @@ function asteroid(pos) {
 	}
 	
 	this.draw = function() {
-		
+		//self.mesh.matrix.translate(new THREE.Vector3(10,0,0));
+		//self.mesh.updateMatrix();
+		self.mesh.position.x += 10;
 	}
 	
 }
